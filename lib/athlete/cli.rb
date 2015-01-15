@@ -11,6 +11,19 @@ module Athlete
     # Verbose (turns loglevel to DEBUG)
     class_option :verbose, :desc => "Output verbose logging", :aliases => "-v", :type => :boolean, :default => false
     
+    desc 'list [TYPE]', 'List all builds and/or deployments'
+    long_desc <<-LONGDESC
+      `athlete list` will show all builds and deployments.
+      `athlete list builds` will show only builds, and `athlete list deployments` will
+      list only deployments.
+    LONGDESC
+    def list(type = nil)
+      setup
+      output_builds if type.nil? || type == 'builds'
+      output_deployments if type.nil? || type == 'deployments'
+    end
+      
+    
     desc 'build [BUILD_NAME]', 'Build and push all Docker images or only the image specified by BUILD_NAME'
     long_desc <<-LONGDESC
       `athlete build` will build the Docker image(s) specified in the build section
@@ -91,6 +104,20 @@ module Athlete
       info "Beginning deployment of '#{deployment.name}'"
       deployment.perform
       info "Deployment complete"
+    end
+    
+    def output_builds
+      puts "Builds"
+      Athlete::Build.builds.keys.sort.each do |name|
+        Athlete::Build.builds[name].readable_output
+      end
+    end
+    
+    def output_deployments
+      puts "Deployments"
+      Athlete::Deployment.deployments.keys.sort.each do |name|
+        Athlete::Deployment.deployments[name].readable_output
+      end
     end
     
   end

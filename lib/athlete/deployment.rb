@@ -260,5 +260,15 @@ module Athlete
       json
     end
     
+    def readable_output
+      lines = []
+      lines << "  Deployment name: #{@name}"
+      @@valid_properties.sort.each do |property|
+        next if property == 'name'
+        lines << sprintf("    %-26s: %s", property, instance_variable_get("@#{property}")) if instance_variable_get("@#{property}")
+      end
+      puts lines.join("\n")
+    end
+    
   end
 end
