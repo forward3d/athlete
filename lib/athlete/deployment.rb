@@ -106,7 +106,7 @@ module Athlete
       error << "The arguments parameter must be specified as an array" if @arguments && !@arguments.kind_of?(Array)
       
       unless errors.empty?
-        raise ConfigurationInvalidException, @errors
+        raise ConfigurationInvalidException, errors
       end
     end
     
