@@ -114,6 +114,9 @@ module Athlete
         info "[#{logged_command}] [stderr] #{stderr}" if stderr != nil
       end
       
+      if retval.exitstatus != 0
+        raise Athlete::CommandExecutionFailed, "The command #{command} exited with non-zero status #{retval.exitstatus}"
+      end
     end
     
     def readable_output
