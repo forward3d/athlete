@@ -87,23 +87,25 @@ instances to run, how much CPU and memory resource to allocate, and so on.
 
 Here's an example of a simple image build and deploy:
 
-    Athlete::Build.define('my-image') do
-      registry 'my-registry:5000'
-      version '1'
-    end
+```ruby
+Athlete::Build.define('my-image') do
+  registry 'my-registry:5000'
+  version '1'
+end
 
-    Athlete::Deployment.define('my-app') do
-      marathon_url 'http://marathon:8080'
-      # image_name 'ubuntu:12.04'
-      # command ['/bin/sleep', '600']
-      # arguments ['something']
-      # environment_variables {'RACK_ENV' => 'production'}
-      build_name 'my-image'
-      cpus 1, :override
-      memory 128, :inherit
-      instances 1, :override
-      minimum_health_capacity 0.5, :inherit
-    end
+Athlete::Deployment.define('my-app') do
+  marathon_url 'http://marathon:8080'
+  # image_name 'ubuntu:12.04'
+  # command ['/bin/sleep', '600']
+  # arguments ['something']
+  # environment_variables {'RACK_ENV' => 'production'}
+  build_name 'my-image'
+  cpus 1, :override
+  memory 128, :inherit
+  instances 1, :override
+  minimum_health_capacity 0.5, :inherit
+end
+```
 
 This will build an image tagged `my-registry:5000/my-image:1`, remembering
 that the Docker image conventions are: `registry_url:registry_port/image_name:image_version`.
