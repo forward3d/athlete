@@ -263,3 +263,35 @@ This description is taken from the
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new pull request
+
+## Acknowledgements
+
+This repository includes code from the [marathon_client gem](https://github.com/mesosphere/marathon_client).
+It is included with Athlete as Athlete requires some unreleased functionality, and some additional
+functionality, and it is not possible (rightly!) to make gems dependent on git repositories.
+
+In accordance with the MIT license, the license information from marathon_client is included here, 
+and in the `lib/marathon` directory, which are files covered by the below license:
+
+    Copyright (c) 2013 Tobi Knaup
+    
+    MIT License
+    
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+    
+    The above copyright notice and this permission notice shall be
+    included in all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+    LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+    OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+    WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
