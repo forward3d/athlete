@@ -97,9 +97,13 @@ module Athlete
       errors << "You must specify marathon_url" unless @marathon_url
       
       # Environment variables must be a hash
-      errors << "environment_variables must be a hash" if @environment_variables && !environment_variables.kind_of?(Hash)
+      errors << "environment_variables must be a hash" if @environment_variables && !@environment_variables.kind_of?(Hash)
       
+      # Can't supply both command and args
+      errors << "You must specify only one of command or arguments" if @command && @arguments
       
+      # Arguments must be in an array
+      error << "The arguments parameter must be specified as an array" if @arguments && !@arguments.kind_of?(Array)
       
       unless errors.empty?
         raise ConfigurationInvalidException, @errors

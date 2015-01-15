@@ -200,15 +200,15 @@ __required__: no
 __override/inherit__: no
 
 The command to run inside the Docker container. This will override
-the `CMD` section of the Dockerfile. This should be specified in
-an array form, as discussed [here](https://docs.docker.com/reference/builder/#cmd).
+the `CMD` section of the Dockerfile.
 
 ##### `arguments`
 
 __required__: no
 __override/inherit__: no
 
-Arguments to supply to the container's ENTRYPOINT.
+Arguments to supply to the container's ENTRYPOINT. This should be
+an array of strings.
 
 ##### `cpus`
 
