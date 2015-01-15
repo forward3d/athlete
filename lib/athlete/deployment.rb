@@ -96,6 +96,11 @@ module Athlete
       # Marathon URL is required
       errors << "You must specify marathon_url" unless @marathon_url
       
+      # Environment variables must be a hash
+      errors << "environment_variables must be a hash" if @environment_variables && !environment_variables.kind_of?(Hash)
+      
+      
+      
       unless errors.empty?
         raise ConfigurationInvalidException, @errors
       end
@@ -121,10 +126,12 @@ module Athlete
       case state
       when :retry_exceeded
         fatal "App failed to start on Marathon; cancelling deploy"
+        exit 1
       when :complete
         info "App is running on Marathon; deployment complete"
       else
         fatal "App is in unknown state on Marathon"
+        exit 1
       end
     end
     
