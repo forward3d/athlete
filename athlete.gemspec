@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["github@tinycat.co.uk"]
   spec.summary       = %q{A deployment tool for Marathon and Mesos}
   spec.description   = %q{A deployment tool for building Docker containers for Marathon and Mesos}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/forward3d/athlete"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
   
-  spec.add_dependency "thor"
-  spec.add_dependency "httparty"
-  spec.add_dependency "multi_json"
+  spec.add_dependency "thor", "~> 0.19"
+  spec.add_dependency "httparty", "~> 0.13"
+  spec.add_dependency "multi_json", "~> 1.10"
 end
