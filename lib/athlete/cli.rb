@@ -24,70 +24,64 @@ module Athlete
     end
       
     
-    desc 'build [BUILD_NAME]', 'Build and push all Docker images or only the image specified by BUILD_NAME'
+    desc 'build BUILD_NAME', 'Build and push the Docker image specified by BUILD_NAME'
     long_desc <<-LONGDESC
-      `athlete build` will build the Docker image(s) specified in the build section
+      `athlete build` will build the named Docker image(s) specified in the build section
       of your Athlete configuration file. It will then push this image to the remote
       registry you have specified, unless you specify the `--no-push` flag (`--push` is
       the default).
-      
-      If you want to specify a single build to run, run `athlete build [BUILD_NAME]`, where BUILD_NAME
-      is the name of the build in your configuration file.
     LONGDESC
     method_option :push, :desc => "Specify whether the image should be pushed to the configured registry", :type => :boolean, :default => true
-    def build(build_name = nil)
+    def build(build_name)
       setup
       
-      # Handle a single build
-      if build_name
-        build = Athlete::Build.builds[build_name]
-        if build
-          do_build(build, options[:push])
-        else
-          fatal "Could not locate a build in the configuration named '#{build_name}'"
-          exit 1
-        end
+      build = Athlete::Build.builds[build_name]
+      if build
+        do_build(build, options[:push])
       else
-        # Run all builds
-        Athlete::Build.builds.each_pair do |name, build|
-          do_build(build, options[:push])
-        end
+        fatal "Could not locate a build in the configuration named '#{build_name}'"
+        exit 1
       end
     end
     
-    desc 'deploy [DEPLOYMENT_NAME]', 'Run all specified deployments or only the deployment specified by DEPLOYMENT_NAME'
+    desc 'deploy DEPLOYMENT_NAME', 'Run the deployment specified by DEPLOYMENT_NAME'
     long_desc <<-LONGDESC
       `athlete deploy` will deploy container(s) (to Marathon) of the Docker image(s) specified in the deployment
       section of your Athlete configuration file.
-      
-      If you want to deploy a single container, run `athlete deploy [DEPLOYMENT_NAME]`, where DEPLOYMENT_NAME
-      is the name of the deployment in your configuration file.
     LONGDESC
-    def deploy(deployment_name = nil)
+    def deploy(deployment_name)
       setup
       
-      # Handle a single deployment request
-      if deployment_name
-        deployment = Athlete::Deployment.deployments[deployment_name]
-        if deployment
-          do_deploy(deployment)
-        else
-          fatal "Could not locate a deployment in the configuration named '#{deployment_name}'"
-          exit 1
-        end
+      deployment = Athlete::Deployment.deployments[deployment_name]
+      if deployment
+       do_deploy(deployment)
       else
-        # All deployments required
-        Athlete::Deployment.deployments.each_pair do |name, deployment|
-          do_deploy(deployment)
-        end
+       fatal "Could not locate a deployment in the configuration named '#{deployment_name}'"
+       exit 1
       end
     end
     
     private
     
     def setup
-      load 'config/athlete.rb'
       handle_verbose
+      load_config
+    end
+    
+    # Basic configuration loading and safety checking of the DSL
+    def load_config
+      config_file = options[:config] || 'config/athlete.rb'
+      if !File.exists?(config_file)
+        fatal "Config file '#{config_file}' does not exist or cannot be read"
+        exit 1
+      end
+      debug "Using configuration file at #{config_file}"
+      begin
+        load config_file
+      rescue Exception => e
+        fatal "Exception loading the config file - #{e.class}: #{e.message} at #{e.backtrace[0]}"
+        exit 1
+      end
     end
     
     def handle_verbose
