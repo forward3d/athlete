@@ -4,7 +4,7 @@ Athlete is a Capistrano-like deployment tool for deploying Docker
 containers into [Marathon](https://mesosphere.github.io/marathon/).
 
 Warning: Athlete is at best a beta. It may not understand all Marathon responses, it
-lacks some features, and it doesn't do some basic error checking. Use at your own risk. 
+lacks some features, and it doesn't do some basic error checking. Use at your own risk.
 Pull requests welcomed. YMMV.
 
 ## Why Athlete exists
@@ -46,7 +46,7 @@ An Athlete build runs `docker build`, tags the image appropriately
 and the pushes it to the registry. This push step can be skipped.
 
 An Athlete deploy uses Marathon's REST API to deploy one of the Docker
-containers built in the build step or any arbitrary Docker container - 
+containers built in the build step or any arbitrary Docker container -
 you are not limited to only deploying containers you built.
 
 ### Command line usage
@@ -79,8 +79,8 @@ to be placed in the `config` directory relative to the base of your app.
 
 __Todo: write a command to produce a template athlete.rb file__
 
-A build takes some information about the name you want to give your 
-container, how it should be versioned, and what registry it should be pushed to. 
+A build takes some information about the name you want to give your
+container, how it should be versioned, and what registry it should be pushed to.
 
 A deployment takes some information about where to deploy to, how many
 instances to run, how much CPU and memory resource to allocate, and so on.
@@ -139,9 +139,9 @@ this line in the deployment section:
 
 When you deploy, Athlete will see that Marathon's currently running value for
 instances of the app is 5, and that you set it to 1 in your deployment configuration
-with :override, and it will _force_ there to be only 1 instance after the deployment.
+with `:override`, and it will _force_ there to be only 1 instance after the deployment.
 
-This would be non-ideal, since your scaling system is 'authoritative' for this 
+This would be non-ideal, since your scaling system is 'authoritative' for this
 property - it decides how many instances should run. Resetting it when you deploy
 could break production!
 
@@ -157,14 +157,14 @@ does not already exist. In that case, we have to supply some initial values to g
 
 ##### `marathon_url`
 
-__required___: yes
+__required__: yes
 __override/inherit__: no
 
 The URL to the Marathon REST API endpoint you're using.
 
-##### `build_name` 
+##### `build_name`
 
-__required___: yes (if not supplying `image_name`)
+__required__: yes (if not supplying `image_name`)
 __override/inherit__: no
 
 The build name to get Docker image information from. You must
@@ -186,7 +186,7 @@ It is required if you are not specifying `image_name`.
 
 ##### `image_name`
 
-__required___: yes (if not supplying `build_name`)
+__required__: yes (if not supplying `build_name`)
 __override/inherit__: no
 
 The Docker image name to deploy. You must specify the entire image name,
@@ -196,7 +196,7 @@ It is required if you are not specifying `build_name`.
 
 ##### `command`
 
-__required___: no
+__required__: no
 __override/inherit__: no
 
 The command to run inside the Docker container. This will override
@@ -205,28 +205,28 @@ an array form, as discussed [here](https://docs.docker.com/reference/builder/#cm
 
 ##### `arguments`
 
-__required___: no
+__required__: no
 __override/inherit__: no
 
 Arguments to supply to the container's ENTRYPOINT.
 
 ##### `cpus`
 
-__required___: yes (on a cold deploy)
+__required__: yes (on a cold deploy)
 __override/inherit__: yes
 
 CPU resource to request for this app. This can be a fractional value (e.g. 0.1).
 
 ##### `memory`
 
-__required___: yes (on a cold deploy)
+__required__: yes (on a cold deploy)
 __override/inherit__: yes
 
 Memory to request for this app in MB.
 
 ##### `environment_variables`
 
-__required___: no
+__required__: no
 __override/inherit__: no
 
 Environment variables to pass into the container at startup - must be specified
@@ -234,26 +234,26 @@ as a hash of `ENV_VAR_NAME => ENV_VAR_VALUE`.
 
 ##### `instances`
 
-__required___: no
+__required__: no
 __override/inherit__: yes
 
 Number of instances of the container to run.
 
 ##### `minimum_health_capacity`
 
-__required___: no
+__required__: no
 __override/inherit__: yes
 
-This description is taken from the 
+This description is taken from the
 [Marathon documentation](https://mesosphere.github.io/marathon/docs/rest-api.html#post-/v2/apps).
 
-> During an upgrade all instances of an application get replaced by a new version. 
-> The minimumHealthCapacity defines the minimum number of healthy nodes, that do not sacrifice 
-> overall application purpose. It is a number between 0 and 1 which is multiplied with the 
-> instance count. The default minimumHealthCapacity is 1, which means no old instance can be stopped, 
-> before all new instances are deployed. A value of 0.5 means that an upgrade can be deployed side by side, 
-> by taking half of the instances down in the first step, deploy half of the new version and 
-> then take the other half down and deploy the rest. A value of 0 means take all instances down 
+> During an upgrade all instances of an application get replaced by a new version.
+> The minimumHealthCapacity defines the minimum number of healthy nodes, that do not sacrifice
+> overall application purpose. It is a number between 0 and 1 which is multiplied with the
+> instance count. The default minimumHealthCapacity is 1, which means no old instance can be stopped,
+> before all new instances are deployed. A value of 0.5 means that an upgrade can be deployed side by side,
+> by taking half of the instances down in the first step, deploy half of the new version and
+> then take the other half down and deploy the rest. A value of 0 means take all instances down
 > immediately and replace with the new application.
 
 ## Contributing
