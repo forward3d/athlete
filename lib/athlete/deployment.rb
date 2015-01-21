@@ -262,10 +262,6 @@ module Athlete
         }
       end
       
-      if @port_mappings && !@port_mappings.empty?
-        json['portMappings'] = @port_mappings
-      end
-      
       if @image_name || @build_name
         image = @image_name || linked_build.final_image_name
         json['container'] = {
@@ -275,7 +271,13 @@ module Athlete
             'network' => 'BRIDGE'
           }
         }
+        
+        if @port_mappings && !@port_mappings.empty?
+          json['container']['docker']['portMappings'] = @port_mappings
+        end
+        
       end
+      
       debug("Generated Marathon JSON: #{json.to_json}")
       json
     end
