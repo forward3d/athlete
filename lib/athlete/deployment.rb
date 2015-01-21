@@ -21,6 +21,7 @@ module Athlete
       environment_variables
       instances
       minimum_health_capacity
+      port_mappings
     }
     
     # Define properties that cannot be overridden or inherited
@@ -32,6 +33,7 @@ module Athlete
       command
       arguments
       environment_variables
+      port_mappings
     }
     
     def initialize
@@ -104,6 +106,9 @@ module Athlete
       
       # Arguments must be in an array
       error << "The arguments parameter must be specified as an array" if @arguments && !@arguments.kind_of?(Array)
+      
+      # Port mappings must be an array (of hashes but let's do a basic check)
+      error << "The port_mappings parameter must be an array of hashes" if @port_mappings && !@port_mappings.kind_of?(Array)
       
       unless errors.empty?
         raise ConfigurationInvalidException, errors
@@ -255,6 +260,10 @@ module Athlete
         json['upgradeStrategy'] = {
           'minimumHealthCapacity' => @minimum_health_capacity
         }
+      end
+      
+      if @port_mappings && !@port_mappings.empty?
+        json['portMappings'] = @port_mappings
       end
       
       if @image_name || @build_name
