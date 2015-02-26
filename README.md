@@ -256,6 +256,19 @@ This description is taken from the
 > then take the other half down and deploy the rest. A value of 0 means take all instances down
 > immediately and replace with the new application.
 
+##### `volumes`
+
+An array of hashes, indicating how to mount volumes inside the container, specified
+like this:
+
+    [
+      { 
+        "containerPath" => "/somepath",
+        "hostPath" => "/some/other/path",
+        "mode" => "RW"
+      }
+    ]
+
 ## Contributing
 
 1. Fork it ( https://github.com/forward3d/athlete/fork )
