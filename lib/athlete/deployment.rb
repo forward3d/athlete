@@ -22,6 +22,7 @@ module Athlete
       instances
       minimum_health_capacity
       port_mappings
+      volumes
     }
     
     # Define properties that cannot be overridden or inherited
@@ -34,6 +35,7 @@ module Athlete
       arguments
       environment_variables
       port_mappings
+      volumes
     }
     
     def initialize
@@ -274,6 +276,10 @@ module Athlete
         
         if @port_mappings && !@port_mappings.empty?
           json['container']['docker']['portMappings'] = @port_mappings
+        end
+        
+        if @volumes
+          json['container']['volumes'] = @volumes
         end
         
       end
