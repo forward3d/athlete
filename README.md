@@ -120,7 +120,7 @@ and run one instance of the container. See below for details of what the propert
 | Property | Required | Description |
 | -------- | -------- | ----------- |
 | registry | no       | The Docker registry to push to - if unspecified, we use the Docker Hub. |
-| version  | yes      | How to version the image; this can be any stringifiable object, or the symbol `:git`, which will version using the output of `git rev-parse HEAD` |
+| version  | yes      | How to version the image; this can be any stringifiable object, or the symbol `:git_head`, which will version using the output of `git rev-parse HEAD` |
 
 #### Deployment DSL reference
 
